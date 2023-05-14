@@ -1,9 +1,9 @@
-name: CI
+name: Chrome
 
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -11,17 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Docker
-      uses: docker/setup-docker@v1
+      - name: Build Docker image
+        run: docker build --no-cache -f "../CookieClicker.Ui.Tests/CookieClicker.dockerfile" -t cc-tests ..
 
-    - name: Build Docker image
-      run: docker build --no-cache -f "./CookieClicker.Ui.Tests/CookieClicker.dockerfile" -t cc-tests .
+      - name: Start Selenium Grid
+        run: docker run --rm -d -p 4444:4444 -p 7900:7900 --shm-size 2g selenium/standalone-chrome:dev
 
-    - name: Start Selenium Grid
-      run: docker run --rm -d -p 4444:4444 -p 7900:7900 --shm-size 2g selenium/standalone-chrome:dev
+      - name: Run tests
+        run: docker run --network host -e WebDriver=remote -e Test_Browser=chrome cc-tests
 
-    - name: Run tests
-      run: docker run --network host -e WebDriver=remote -e Test_Browser=chrome cc-tests
