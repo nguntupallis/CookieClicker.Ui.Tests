@@ -1,0 +1,11 @@
+# Exclude files and directories generated during the build process
+bin/
+obj/
+TestResults/
+**/*.log
+**/*.md
+**/*.txt
+**/*.yml
+**/*.yaml
+.dockerignore
+Dockerfile
