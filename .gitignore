@@ -1,0 +1,22 @@
+# Compiled files
+bin/
+obj/
+
+# Test results
+TestResults/
+
+# Environment-specific files
+*.srprofile
+
+# Visual Studio files
+.vs/
+
+# NuGet packages
+*.nuget.cache
+*.dll
+*.exe
+*.pdb
+*.user
+
+# Build and publish files
+publish/
