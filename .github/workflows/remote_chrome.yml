@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Build Docker image
-        run: docker build --no-cache -f "./CookieClicker.Ui.Tests/CookieClicker.dockerfile" -t cc-tests ..
+        run: docker build --no-cache -f "CookieClicker.dockerfile" -t cc-tests ..
 
       - name: Start Selenium Grid
         run: docker run --rm -d -p 4444:4444 -p 7900:7900 --shm-size 2g selenium/standalone-chrome:dev
