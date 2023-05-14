@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'CookieClicker.Ui.Tests/**'
   workflow_dispatch:
 
 jobs:
