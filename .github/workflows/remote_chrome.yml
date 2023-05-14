@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 7.0.x
+
+    - name: Start Selenium Grid
+      run: docker run --rm -d -p 4444:4444 -p 7900:7900 --shm-size 2g selenium/standalone-chrome:dev
+
+    - name: Restore dependencies
+      run: dotnet restore ./CookieClicker.Ui.Tests/CookieClicker.Ui.Tests.csproj
+
+    - name: Build project
+      run: dotnet build --configuration Release ./CookieClicker.Ui.Tests/CookieClicker.Ui.Tests.csproj
+
+    - name: Run tests
+      run: dotnet test --no-build ./CookieClicker.Ui.Tests/CookieClicker.Ui.Tests.csproj
